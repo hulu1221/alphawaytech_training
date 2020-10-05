@@ -60,14 +60,9 @@ public class Student {
         this.gpa = gpa;
     }
     
-//    @Override
-//    public int compareTo(Student comparestu) {
-//        int compareage=((Student)comparestu).getStudentage();
-//        /* For Ascending order*/
-//        return this.studentage-compareage;
-//
-//        /* For Descending order do like this */
-//        //return compareage-this.studentage;
-//    }
-//    
+    public String toString() {
+        return "Student [id=" + id + " , name=" + name + ", "
+                + "address= " + address + ",age =" + age+ "]";
+    }
+    
 }

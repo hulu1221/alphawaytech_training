@@ -1,5 +1,6 @@
 package qlsv;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,16 +8,22 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class StudentManager {
-	public static Scanner keyboard = new Scanner(System.in);
-    public List<Student> studentList;
-    
+	private static Scanner keyboard = new Scanner(System.in);
+	private List<Student> studentList;
+    private StudentConnection connect;
     public StudentManager() {
-    	studentList = new ArrayList<>();
+    	 connect = new StudentConnection("C:\\Users\\CUONG_VIP\\Desktop\\alphawaytech_training\\QLSV\\students.txt");
+    	 try {
+			studentList = connect.selectAll();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			studentList = new ArrayList<>();
+		}   	    
     }
-    
+  
     public void add() {
     	int id = (studentList.size() > 0) ? (studentList.size() + 1) : 1;
-//    	int id = 1;
     	System.out.println("new student id = " + id);
         String name = inputName();
         byte age = inputAge();
@@ -24,6 +31,7 @@ public class StudentManager {
         float gpa = inputGpa();
         Student student = new Student(id, name, age, address, gpa);
         studentList.add(student);
+        connect.insert(studentList);
     }
     
     public void edit(int id) {
@@ -43,6 +51,7 @@ public class StudentManager {
             System.out.printf("id = %d not existed.\n", id);
         } else {
             // write code to save data if it had other saving location
+        	 connect.insert(studentList);
         }
     }
 
@@ -60,6 +69,7 @@ public class StudentManager {
             System.out.printf("id = %d not existed.\n", id);
         } else {
             // write code to save data if it had other saving location
+        	 connect.insert(studentList);
         }
     }
     
@@ -121,6 +131,12 @@ public class StudentManager {
             System.out.format("%20s | ", student.getAddress());
             System.out.format("%10.1f%n", student.getGpa());
         }
+     // this method converts a list to JSON Array
+//        String json = new Gson().toJson(studentList);
+//        System.out.println(json);   
+//
+//        ArrayList<Student> data = new Gson().fromJson(json,
+//        		 new TypeToken<List<Student>>(){}.getType());
     }
     public void SortByName() {
         Collections.sort(studentList, new Comparator<Student>() {

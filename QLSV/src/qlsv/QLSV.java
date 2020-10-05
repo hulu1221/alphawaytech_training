@@ -1,7 +1,6 @@
 package qlsv;
 import java.util.Scanner;
 
-
 public class QLSV {
   public static Scanner keyboard = new Scanner(System.in);
   public static void main(String[] args) {   
