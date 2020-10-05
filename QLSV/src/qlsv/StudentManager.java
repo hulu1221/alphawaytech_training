@@ -121,7 +121,7 @@ public class StudentManager {
         System.out.print("Input student gpa: ");
         while (true) {
             try {
-                double gpa = Float.parseFloat((keyboard.nextLine()));
+                float gpa = Float.parseFloat((keyboard.nextLine()));
                 if (gpa < 0.0 && gpa > 10.0) {
                     throw new NumberFormatException();
                 }
