@@ -22,41 +22,41 @@ public class QLSV {
 	  System.out.println(mnu);
   }
   static void sendCommand() {
-	  int myint;
+	  String strNum;
       StudentManager studentManager = new StudentManager();
       int studentId;
       boolean closing = false;
       do {
-    	  myint = keyboard.nextInt();
-		  switch(myint) {
-		  case 0:
+    	  strNum = keyboard.nextLine();
+		  switch(strNum) {
+		  case "0":
 			  // Close app
 			  closing = true;
 			  break;
-		  case 1:
+		  case "1":
 			  // Add student
 			  System.out.println("Add a student.");
 			  studentManager.add();
 			  break;
-		  case 2:
+		  case "2":
 			  // Edit _
 			  studentId = studentManager.inputId();
 			  studentManager.edit(studentId);
 			  break;
-		  case 3:
+		  case "3":
 			  // Delete _
 			  studentId = studentManager.inputId();
 			  studentManager.delete(studentId);
 			  break;
-		  case 4:
+		  case "4":
 			  // Sort by gpa_
 			  studentManager.SortByGpa();
 			  break;
-		  case 5:
+		  case "5":
 			  // Sort by name _
 			  studentManager.SortByName();
 			  break;
-		  case 6:
+		  case "6":
 			  // Show list _
 			  studentManager.show();
 			  break;		

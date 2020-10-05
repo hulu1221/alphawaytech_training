@@ -69,8 +69,18 @@ public class StudentManager {
             System.out.printf("id = %d not existed.\n", id);
         } else {
             // write code to save data if it had other saving location
-        	 connect.insert(studentList);
+        	// update other row id after delete
+        	
+        	 connect.insert(updateRowId(studentList));
+        	 
         }
+    }
+    public List<Student> updateRowId(List<Student> studentList) {
+    	int size = studentList.size();
+    	for (int i = 0; i < size; i++) {
+    		studentList.get(i).setId(i + 1);
+        }
+    	return studentList;
     }
     
     public int inputId() {
@@ -111,13 +121,13 @@ public class StudentManager {
         System.out.print("Input student gpa: ");
         while (true) {
             try {
-                float gpa = Float.parseFloat((keyboard.nextLine()));
+                double gpa = Float.parseFloat((keyboard.nextLine()));
                 if (gpa < 0.0 && gpa > 10.0) {
                     throw new NumberFormatException();
                 }
                 return gpa;
             } catch (NumberFormatException ex) {
-                System.out.print("invalid! Input student age again: ");
+                System.out.print("invalid! Input student gpa again: ");
             }
         }
     }
@@ -131,12 +141,6 @@ public class StudentManager {
             System.out.format("%20s | ", student.getAddress());
             System.out.format("%10.1f%n", student.getGpa());
         }
-     // this method converts a list to JSON Array
-//        String json = new Gson().toJson(studentList);
-//        System.out.println(json);   
-//
-//        ArrayList<Student> data = new Gson().fromJson(json,
-//        		 new TypeToken<List<Student>>(){}.getType());
     }
     public void SortByName() {
         Collections.sort(studentList, new Comparator<Student>() {

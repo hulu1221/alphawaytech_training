@@ -67,6 +67,8 @@ public class StudentConnection {
             	studentList.add(student);
             }            
 
+        } catch (NullPointerException e) {
+//        	e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
