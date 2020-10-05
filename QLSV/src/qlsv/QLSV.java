@@ -26,10 +26,14 @@ public class QLSV {
 	  int myint;
       StudentManager studentManager = new StudentManager();
       int studentId;
-      
-      while (true) {
+      boolean closing = false;
+      do {
     	  myint = keyboard.nextInt();
 		  switch(myint) {
+		  case 0:
+			  // Close app
+			  closing = true;
+			  break;
 		  case 1:
 			  // Add student
 			  System.out.println("Add a student.");
@@ -62,8 +66,13 @@ public class QLSV {
 			  System.out.println("Please enter a valid number!");
 			  break;
 		  }
+		  if (closing == true) {
+			  break;
+		  }
 		  ShowMenu();
+
       }
+      while (closing == false);
       
   }
 
