@@ -62,9 +62,11 @@ public class Students {
 		try {			
 			PreparedStatement stmtCheck = conn.prepareStatement("SELECT * FROM STUDENTS WHERE id = (?)");  
 			stmtCheck.setInt(1, stud.getId());
-			int rs = stmtCheck.executeUpdate(); 
+			ResultSet rs = stmtCheck.executeQuery(); 
+//			System.out.println(rs);
 			// if result have no record then return false
-			if (rs > 0) {
+			if (rs.next()) {
+				System.out.println(stud.getId());
 				// select student by id
 				String sql = "UPDATE STUDENTS SET name =(?), age = (?), address = (?), gpa = (?)";
 				PreparedStatement stmtUpdate = conn.prepareStatement(sql + "WHERE id = (?)");  
