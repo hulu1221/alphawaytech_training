@@ -8,5 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/CUONG_VIP/Desktop/alphawaytech_training/QLSV/src/qlsv/gson-2.6.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/CUONG_VIP/Desktop/alphawaytech_training/QLSV/src/qlsv/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/CUONG_VIP/Desktop/alphawaytech_training/QLSV/src/qlsv/mysql-connector-java-5.1.40-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/CUONG_VIP/Desktop/alphawaytech_training/QLSV/src/qlsv/mariadb-java-client-2.7.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

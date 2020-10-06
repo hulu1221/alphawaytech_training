@@ -7,6 +7,7 @@ public class QLSV {
 
 	  ShowMenu();
 	  sendCommand();
+	  
   }
   static void  ShowMenu() {
 	  String mnu;;
@@ -23,7 +24,12 @@ public class QLSV {
   }
   static void sendCommand() {
 	  String strNum;
-      StudentManager studentManager = new StudentManager();
+	  MariaConnection maria = new MariaConnection();
+	  String host = "jdbc:mariadb://222.252.25.241:23306/06102020";
+	  String username = "test";
+	  String password = "123456";
+	  Students students = new Students(maria.getConnection(host, username, password));
+      StudentManager studentManager = new StudentManager(students);
       int studentId;
       boolean closing = false;
       do {

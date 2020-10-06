@@ -51,6 +51,7 @@ public class StudentConnection {
 	
 	public List<Student> selectAll() throws FileNotFoundException {
         List<Student> studentList = new ArrayList<>();
+        
         String json = "";
         try {
             FileReader reader = new FileReader(this.file_name);

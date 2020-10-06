@@ -1,7 +1,5 @@
 package qlsv;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
@@ -10,19 +8,15 @@ import java.util.Scanner;
 public class StudentManager {
 	private static Scanner keyboard = new Scanner(System.in);
 	private List<Student> studentList;
-    private StudentConnection connect;
-    public StudentManager() {
-    	 connect = new StudentConnection("C:\\Users\\CUONG_VIP\\Desktop\\alphawaytech_training\\QLSV\\students.txt");
-    	 try {
-			studentList = connect.selectAll();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			studentList = new ArrayList<>();
-		}   	    
+//    private StudentConnection connect;
+    private Students students;
+    public StudentManager(Students students) {
+    	this.students = students;
+//    	studentList = students.selectAll();
     }
   
     public void add() {
+    	studentList = students.selectAll();
     	int id = (studentList.size() > 0) ? (studentList.size() + 1) : 1;
     	System.out.println("new student id = " + id);
         String name = inputName();
@@ -30,57 +24,37 @@ public class StudentManager {
         String address = inputAddress();
         float gpa = inputGpa();
         Student student = new Student(id, name, age, address, gpa);
-        studentList.add(student);
-        connect.insert(studentList);
+//        studentList.add(student);
+        int i = students.insert(student);
+        if (i > 0) {
+        	System.out.println("Success!");
+        } else {
+        	System.out.println("Fail!");
+        }
     }
     
     public void edit(int id) {
-        boolean isExisted = false;
-        int size = studentList.size();
-        for (int i = 0; i < size; i++) {
-            if (studentList.get(i).getId() == id) {
-                isExisted = true;
-                studentList.get(i).setName(inputName());
-                studentList.get(i).setAge(inputAge());
-                studentList.get(i).setAddress(inputAddress());
-                studentList.get(i).setGpa(inputGpa());
-                break;
-            }
-        }
-        if (!isExisted) {
-            System.out.printf("id = %d not existed.\n", id);
+        Student stud = new Student();
+        stud.setId(id);
+        stud.setName(inputName());
+        stud.setAge(inputAge());
+        stud.setAddress(inputAddress());
+        stud.setGpa(inputGpa());
+        int i = students.updateById(stud);
+        if (i > 0) {
+        	System.out.println("Success!");
         } else {
-            // write code to save data if it had other saving location
-        	 connect.insert(studentList);
+        	System.out.println("Fail!");
         }
     }
 
     public void delete(int id) {
-        boolean isExisted = false;
-        int size = studentList.size();
-        for (int i = 0; i < size; i++) {
-            if (studentList.get(i).getId() == id) {
-                isExisted = true;
-                studentList.remove(i);
-                break;
-            }
-        }
-        if (!isExisted) {
-            System.out.printf("id = %d not existed.\n", id);
+        boolean deleted = students.deleteById(id);
+        if (deleted) {
+        	System.out.println("Success!");
         } else {
-            // write code to save data if it had other saving location
-        	// update other row id after delete
-        	
-        	 connect.insert(updateRowId(studentList));
-        	 
+        	System.out.println("Fail!");
         }
-    }
-    public List<Student> updateRowId(List<Student> studentList) {
-    	int size = studentList.size();
-    	for (int i = 0; i < size; i++) {
-    		studentList.get(i).setId(i + 1);
-        }
-    	return studentList;
     }
     
     public int inputId() {
@@ -133,6 +107,7 @@ public class StudentManager {
     }
     
     public void show() {
+    	studentList = students.selectAll();
         System.out.println("Number of students: " + studentList.size());
         for (Student student : studentList) {
             System.out.format("%5d | ", student.getId());
@@ -143,6 +118,7 @@ public class StudentManager {
         }
     }
     public void SortByName() {
+    	studentList = students.selectAll();
         Collections.sort(studentList, new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
@@ -153,6 +129,7 @@ public class StudentManager {
     }
 
     public void SortByGpa() {
+    	studentList = students.selectAll();
         Collections.sort(studentList, new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
