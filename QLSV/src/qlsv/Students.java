@@ -62,9 +62,9 @@ public class Students {
 		try {			
 			PreparedStatement stmtCheck = conn.prepareStatement("SELECT * FROM STUDENTS WHERE id = (?)");  
 			stmtCheck.setInt(1, stud.getId());
-			ResultSet rs = stmtCheck.executeQuery(); 
+			int rs = stmtCheck.executeUpdate(); 
 			// if result have no record then return false
-			if (rs.next()) {
+			if (rs > 0) {
 				// select student by id
 				String sql = "UPDATE STUDENTS SET name =(?), age = (?), address = (?), gpa = (?)";
 				PreparedStatement stmtUpdate = conn.prepareStatement(sql + "WHERE id = (?)");  
@@ -73,6 +73,29 @@ public class Students {
 				stmtUpdate.setString(3, stud.getAddress());
 				stmtUpdate.setFloat(4, stud.getGpa());
 				stmtUpdate.setInt(5, stud.getId());
+				i = stmtUpdate.executeUpdate();  
+			}
+		} catch(SQLException se){
+		      //Handle errors for JDBC
+		      se.printStackTrace();
+		   } 
+		return i;
+	}
+	
+	public Integer updateRowNewId(int oldId, int newId) {		
+		// check exist student id
+		int i = 0;
+		try {			
+			PreparedStatement stmtCheck = conn.prepareStatement("SELECT * FROM STUDENTS WHERE id = (?)");  
+			stmtCheck.setInt(1, oldId);
+			ResultSet rs = stmtCheck.executeQuery(); 
+			// if result have no record then return false
+			if (rs.next()) {
+				// select student by id
+				String sql = "UPDATE STUDENTS SET id =(?)";
+				PreparedStatement stmtUpdate = conn.prepareStatement(sql + "WHERE id = (?)");  
+				stmtUpdate.setInt(1, newId);
+				stmtUpdate.setInt(2, oldId);
 				i = stmtUpdate.executeUpdate();  
 			}
 		} catch(SQLException se){
@@ -106,10 +129,19 @@ public class Students {
 		// check exist student id
 		boolean deleted = false;
 		try {			
-			PreparedStatement stmtCheck = conn.prepareStatement("SELECT * FROM STUDENTS WHERE id = (?)");  
+			PreparedStatement stmtCheck = conn.prepareStatement("DELETE FROM STUDENTS WHERE id = (?)");  
 			stmtCheck.setInt(1, id);
-			ResultSet rs = stmtCheck.executeQuery(); 
-			return deleted = rs.next();
+			int rs = stmtCheck.executeUpdate(); 
+			if (rs > 0) {
+				// if deleted then update all student id
+				int i = 1;
+		    	for (Student student : selectAll()) {
+		    		updateRowNewId(student.getId(), i);
+		    		i++;
+		        }
+		    	return true;
+			}
+			
 		} catch(SQLException se){
 		      //Handle errors for JDBC
 		      se.printStackTrace();
