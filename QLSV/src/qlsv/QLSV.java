@@ -1,45 +1,13 @@
 package qlsv;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+
 import java.util.Scanner;
 
 public class QLSV {
   public static Scanner keyboard = new Scanner(System.in);
-  private static final String FILE_CONFIG = "\\config.properties";
-  private static String host, username, password;
 
   public static void main(String[] args) {   
-	  Properties properties = new Properties();
-	  InputStream inputStream = null;
-	  try {
-		  String currentDir = System.getProperty("user.dir");
-          inputStream = new FileInputStream(currentDir + FILE_CONFIG);
-          
-          // load properties from file
-          properties.load(inputStream);
-          
-          // get property by name
-          host = properties.getProperty("host");
-          username = properties.getProperty("username");
-          password = properties.getProperty("password");
-          
-	  } catch (IOException e) {
-		  e.printStackTrace();
-	  } finally {
-          // close objects
-          try {
-              if (inputStream != null) {
-                  inputStream.close();
-              }
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
-	  }
 	  ShowMenu();
 	  sendCommand();
-	  
   }
   static void  ShowMenu() {
 	  String mnu;;
@@ -56,8 +24,9 @@ public class QLSV {
   }
   static void sendCommand() {
 	  String strNum;
-	  MariaConnection maria = new MariaConnection();
-	  Students students = new Students(maria.getConnection(host, username, password));
+	  ReadPropertiesFromConfig config = ReadPropertiesFromConfig.getInstance();	
+	  MariaConnection maria = new MariaConnection();	    
+	  Students students = new Students(maria.getConnection(config.getProperty("host"), config.getProperty("username"), config.getProperty("password")));
       StudentManager studentManager = new StudentManager(students);
       int studentId;
       boolean closing = false;
