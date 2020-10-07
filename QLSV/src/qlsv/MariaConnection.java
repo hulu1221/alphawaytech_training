@@ -11,7 +11,7 @@ public  class MariaConnection {
 		Connection conn = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			System.out.println("connecting to server " + dbURL + " with username: '" + userName + "' and passowrd: '" + password + "'");
+			System.out.println("connecting to server " + dbURL + " ...");
 			conn = DriverManager.getConnection(dbURL, userName, password);
 			System.out.println("connect successfully!");
 		} catch (Exception ex) {
