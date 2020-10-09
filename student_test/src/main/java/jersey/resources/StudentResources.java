@@ -1,19 +1,16 @@
 package jersey.resources;
 
-import com.google.gson.Gson;
 import jersey.config.MariaConnection;
 import jersey.domain.Student;
 import jersey.services.StudentService;
 
 import javax.ws.rs.*;
-
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/students")
 public class StudentResources {
-    private MariaConnection conn = new MariaConnection();
-    private StudentService st = new StudentService(conn.getConnection("jdbc:mariadb://222.252.25.241:23306/06102020", "test", "123456"));
+    private StudentService st = new StudentService(new MariaConnection().getConnection());
 
     @GET
     @Path("/")
