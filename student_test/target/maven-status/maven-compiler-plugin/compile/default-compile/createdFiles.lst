@@ -1,0 +1,6 @@
+jersey\HelloJersey.class
+jersey\resources\StudentResources.class
+jersey\domain\Student.class
+jersey\config\MariaConnection.class
+jersey\services\StudentService.class
+jersey\config\ApplicationProperties.class

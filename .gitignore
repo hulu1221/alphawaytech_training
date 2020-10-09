@@ -1,2 +1,10 @@
 config.properties
 students.txt
+/apache-tomcat-9.0.38
+.idea/*
+
+target/*
+
+*.iml
+
+*.yml
